@@ -2,12 +2,14 @@ import {
     Box,
     Button,
     Container,
+    IconButton,
     Select,
     TextField,
     Typography,
     makeStyles
 } from '@material-ui/core'
 import TemplateDefault from '../../templates/Default'
+import { DeleteForever } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -19,7 +21,52 @@ const useStyles = makeStyles((theme) => ({
     },
     boxContainer: {
         paddingBottom: theme.spacing(3)
+    },
+    thumbsContainer: {
+        display: 'flex',
+        marginTop: 15,
+    },
+    dropzone: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        padding: '10px',
+        margin: '0 15px 15px 0',
+        width: 200,
+        height: 150,
+        backgroundColor: theme.palette.background.default,
+        border: '2px dashed black',
+
+    },
+    thumb: {
+        width: 200,
+        height: 150,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        position: 'relative',
+
+        '&:hover $mask': {
+            display: 'flex'
+        }
+    },
+    mask: {
+        display: 'none',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        height: '100%',
+        width: '100%',
+    },
+    adsCover: {
+        backgroundColor: theme.palette.secondary.mark,
+        position: 'absolute',
+        padding: '6px 10px',
+        bottom: 0,
+        left: 0,
     }
+
 }))
 
 
@@ -71,7 +118,28 @@ const Publish = () => {
                     <Typography component="div" variant="body2" color="textPrimary">
                         The first image will be the first advertisement image.
                     </Typography>
-
+                    <Box className={classes.thumbsContainer}>
+                        <Box className={classes.dropzone}>
+                            <Typography variant="body2" color="">
+                                Click to add or drag an image here.
+                            </Typography>
+                        </Box>
+                        <Box
+                            className={classes.thumb}
+                            style={{ backgroundImage: 'url(https://source.unsplash.com/random)' }}
+                        >
+                            <Box className={classes.adsCover}>
+                                <Typography variant="body" color="primary">
+                                    Ads cover
+                                </Typography>
+                            </Box>
+                            <Box className={classes.mask}>
+                                <IconButton color="secondary">
+                                    <DeleteForever fontSize="large" />
+                                </IconButton>
+                            </Box>
+                        </Box>
+                    </Box>
                 </Box>
             </Container>
 
@@ -121,7 +189,7 @@ const Publish = () => {
             </Container>
             <Container maxWidth="md">
                 <Box>
-                    <Button variant="contained" color="primary">
+                    <Button variant="contained" color="texPrimary">
                         Publish advertisement
                     </Button>
                 </Box >

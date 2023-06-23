@@ -6,7 +6,8 @@ const theme = createTheme({
             main: "#000000",
         },
         secondary: {
-            main: "#555555",
+            main: "#ffffff",
+            mark: "#ffd900"
         },
         background: {
             default: 'rgb(242,244, 245)',
