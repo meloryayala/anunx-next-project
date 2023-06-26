@@ -10,6 +10,8 @@ import {
     Avatar,
     CardMedia,
 } from '@material-ui/core'
+import Carousel from 'react-material-ui-carousel'
+
 import TemplateDefault from '../templates/Default'
 
 const useStyles = makeStyles((theme) => ({
@@ -24,6 +26,12 @@ const useStyles = makeStyles((theme) => ({
     price: {
         fontWeight: 'bold',
         marginBottom: 15,
+    },
+    card: {
+        height: '100%'
+    },
+    cardMedia: {
+        paddingTop: '56%'
     }
 }))
 
@@ -37,7 +45,32 @@ const Products = () => {
                 <Grid container spacing={3}>
                     <Grid item xs={8}>
                         <Box className={classes.box}>
-                            Carrosel
+                            <Carousel
+                                navButtonsAlwaysVisible
+                                autoPlay={false}
+                                animation="slide"
+                                navButtonsProps={{
+                                    style: {
+                                        color: 'white'
+                                    }
+                                }}
+                            >
+                                <Card className={classes.card}>
+                                    <CardMedia
+                                        className={classes.cardMedia}
+                                        image="https://source.unsplash.com/random?a=1"
+                                        title="Título"
+                                    />
+                                </Card>
+
+                                <Card className={classes.card}>
+                                    <CardMedia
+                                        className={classes.cardMedia}
+                                        image="https://source.unsplash.com/random?a=2"
+                                        title="Título"
+                                    />
+                                </Card>
+                            </Carousel>
                         </Box>
 
                         <Box className={classes.box} textAlign="left">
@@ -57,16 +90,16 @@ const Products = () => {
 
                     <Grid item xs={4}>
                         <Card elevation={0} className={classes.box}>
-                            <CardHeader 
+                            <CardHeader
                                 avatar={
                                     <Avatar>T</Avatar>
                                 }
                                 title="Melory Ayala"
                                 subheader="melory.ayala@gmail.com"
                             />
-                            <CardMedia 
-                            image="https://source.unsplash.com/random"
-                            title="Melory Ayala"
+                            <CardMedia
+                                image="https://source.unsplash.com/random?a=1"
+                                title="Melory Ayala"
                             />
                         </Card>
 
