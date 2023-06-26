@@ -19,9 +19,6 @@ import TemplateDefault from '../../templates/Default'
 import { useState } from 'react'
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-        padding: theme.spacing(8, 0, 6)
-    },
     box: {
         backgroundColor: theme.palette.background.white,
         padding: theme.spacing(3)
@@ -105,7 +102,7 @@ const Publish = () => {
 
     return (
         <TemplateDefault>
-            <Container maxWidth="sm" className={classes.container}>
+            <Container maxWidth="sm">
                 <Typography component="h1" variant="h2" color="textPrimary" align="center">
                     Publish advertisement
                 </Typography>

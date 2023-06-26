@@ -14,9 +14,6 @@ import TemplateDefault from '../../templates/Default'
 
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    padding: theme.spacing(8, 0, 6)
-  },
   cardMedia: {
     paddingTop: '56%',
   },
@@ -32,7 +29,7 @@ const Dashboard = () => {
 
   return (
     <TemplateDefault>
-      <Container maxWidth="sm" className={classes.container}>
+      <Container maxWidth="sm">
         <Typography component="h1" variant="h2" align="center">
           My advertisements
         </Typography>
@@ -94,7 +91,7 @@ const Dashboard = () => {
             </Card>
           </Grid>
 
-          
+
 
           <Grid item xs={12} sm={6} md={4}>
             <Card>
