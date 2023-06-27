@@ -17,7 +17,8 @@ import {
     Typography,
     FormControl,
     FormHelperText,
-    makeStyles
+    makeStyles,
+    Input
 } from '@material-ui/core'
 import { DeleteForever } from '@material-ui/icons'
 
@@ -76,6 +77,10 @@ const useStyles = makeStyles((theme) => ({
         padding: '6px 10px',
         bottom: 0,
         left: 0,
+    },
+    inputLabel: {
+        fontWeight: 400,
+        color: theme.palette.primary.main,
     }
 
 }))
@@ -86,7 +91,11 @@ const validateSchema = object({
         .max(11, 'Title is too big')
         .required('Required field'),
 
-    category: string().required('Required field')
+    category: string().required('Required field'),
+
+    description: string()
+        .min(50, 'Write a description minimun of 50 caracteries')
+        .required('Required field'),
 })
 
 const Publish = () => {
@@ -120,6 +129,7 @@ const Publish = () => {
                 initialValues={{
                     title: '',
                     category: '',
+                    description: '',
                 }}
                 validationSchema={validateSchema}
                 onSubmit={(values) => {
@@ -144,28 +154,27 @@ const Publish = () => {
                                         More details the better!
                                     </Typography>
                                 </Container>
+
                                 <br /><br />
+
                                 <Container maxWidth="md" className={classes.boxContainer}>
                                     <Box className={classes.box}>
-                                        <Typography component="h6" variant="h6" color="textPrimary">
-                                            Ads title
-                                        </Typography>
-                                        <TextField
-                                            name="title"
-                                            value={values.title}
-                                            onChange={handleChange}
-                                            label="e. g. Bike new Fyer"
-                                            size="small"
-                                            fullWidth
-                                            error={errors.title}
-                                            helperText={errors.title}
+                                        <FormControl error={errors.title} fullWidth>
+                                            <InputLabel className={classes.inputLabel}>What are you selling?</InputLabel>
+                                            <Input
+                                                name="title"
+                                                value={values.title}
+                                                onChange={handleChange}
+                                            />
+                                            <FormHelperText>
+                                                {errors.title}
+                                            </FormHelperText>
+                                        </FormControl>
 
-                                        />
                                         <br /> <br />
-                                        <Typography component="h6" variant="h6" color="textPrimary">
-                                            Category
-                                        </Typography>
+
                                         <FormControl error={errors.category} fullWidth>
+                                            <InputLabel className={classes.inputLabel}>Category</InputLabel>
                                             <Select
                                                 name="category"
                                                 value={values.category}
@@ -223,9 +232,6 @@ const Publish = () => {
                                                                     </Typography>
                                                                 </Box>
                                                                 : null
-
-
-
                                                         }
                                                         <Box className={classes.mask}>
                                                             <IconButton color="secondary" onClick={() => handleRemoveFile(file.name)}>
@@ -242,18 +248,18 @@ const Publish = () => {
 
                                 <Container maxWidth="md" className={classes.boxContainer}>
                                     <Box className={classes.box}>
-                                        <Typography component="h6" variant="h6" color="textPrimary">
-                                            Description
-                                        </Typography>
-                                        <Typography component="div" variant="body2" color="textPrimary">
-                                            Write detailed what you are selling.
-                                        </Typography>
-                                        <TextField
-                                            multiline
-                                            rows={6}
-                                            variant="outlined"
-                                            fullWidth
-                                        />
+                                        <FormControl error={errors.description} fullWidth>
+                                            <InputLabel className={classes.inputLabel}>Write detailed about what you are selling:</InputLabel>
+                                            <Input
+                                                name="description"
+                                                multiline
+                                                rows={6}
+                                                variant="outlined"
+                                            />
+                                            <FormHelperText>
+                                                {errors.description}
+                                            </FormHelperText>
+                                        </FormControl>
                                     </Box>
                                 </Container>
 
