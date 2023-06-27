@@ -1,7 +1,5 @@
-import { useState } from 'react'
 import { Formik } from 'formik'
 import { useDropzone } from 'react-dropzone'
-import { object, string, number, array, date, InferType } from 'yup'
 
 import {
     Box,
@@ -15,99 +13,13 @@ import {
     Typography,
     FormControl,
     FormHelperText,
-    makeStyles,
     Input
 } from '@material-ui/core'
 import { DeleteForever } from '@material-ui/icons'
 
-import TemplateDefault from '../../templates/Default'
-
-const useStyles = makeStyles((theme) => ({
-    box: {
-        backgroundColor: theme.palette.background.white,
-        padding: theme.spacing(3)
-    },
-    boxContainer: {
-        paddingBottom: theme.spacing(3)
-    },
-    thumbsContainer: {
-        display: 'flex',
-        marginTop: 15,
-        flexWrap: 'wrap'
-    },
-    dropzone: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        padding: '10px',
-        margin: '0 15px 15px 0',
-        width: 200,
-        height: 150,
-        backgroundColor: theme.palette.background.default,
-        border: '2px dashed black',
-
-    },
-    thumb: {
-        width: 200,
-        height: 150,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
-        position: 'relative',
-        margin: '0 15px 15px 0',
-
-        '&:hover $mask': {
-            display: 'flex'
-        }
-    },
-    mask: {
-        display: 'none',
-        justifyContent: 'center',
-        alignItems: 'center',
-        textAlign: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        height: '100%',
-        width: '100%',
-    },
-    adsCover: {
-        backgroundColor: theme.palette.secondary.mark,
-        position: 'absolute',
-        padding: '6px 10px',
-        bottom: 0,
-        left: 0,
-    },
-    inputLabel: {
-        fontWeight: 400,
-        color: theme.palette.primary.main,
-    }
-
-}))
-
-const validateSchema = object({
-    title: string()
-        .min(6, 'Write a title more detailed')
-        .max(11, 'Title is too big')
-        .required('Required field'),
-
-    category: string().required('Required field'),
-
-    description: string()
-        .min(50, 'Write a description minimun of 50 caracteries')
-        .required('Required field'),
-
-    price: number().required('Required field'),
-
-    email: string()
-        .email('Write a valid e-mail')
-        .required(),
-
-    name: string().required('Required field'),
-
-    phone: number().required('Required field'),
-
-    files: array().min(1, 'Upload at least one image').required('Required field'),
-
-})
+import TemplateDefault from '../../../templates/Default'
+import { initialValues, validateSchema } from './formValues'
+import useStyles from './styles'
 
 const Publish = () => {
     const classes = useStyles()
@@ -115,16 +27,7 @@ const Publish = () => {
     return (
         <TemplateDefault>
             <Formik
-                initialValues={{
-                    title: '',
-                    category: '',
-                    description: '',
-                    price: '',
-                    email: '',
-                    name: '',
-                    phone: '',
-                    files: [],
-                }}
+                initialValues={initialValues}
                 validationSchema={validateSchema}
                 onSubmit={(values) => {
                     console.log('form enviado', values)
