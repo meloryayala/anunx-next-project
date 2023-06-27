@@ -7,14 +7,16 @@ import {
     Box,
     Button,
     Container,
-    FormControl,
     IconButton,
     InputAdornment,
     InputLabel,
+    MenuItem,
     OutlinedInput,
     Select,
     TextField,
     Typography,
+    FormControl,
+    FormHelperText,
     makeStyles
 } from '@material-ui/core'
 import { DeleteForever } from '@material-ui/icons'
@@ -83,6 +85,8 @@ const validateSchema = object({
         .min(6, 'Write a title more detailed')
         .max(11, 'Title is too big')
         .required('Required field'),
+
+    category: string().required('Required field')
 })
 
 const Publish = () => {
@@ -115,6 +119,7 @@ const Publish = () => {
             <Formik
                 initialValues={{
                     title: '',
+                    category: '',
                 }}
                 validationSchema={validateSchema}
                 onSubmit={(values) => {
@@ -154,37 +159,37 @@ const Publish = () => {
                                             fullWidth
                                             error={errors.title}
                                             helperText={errors.title}
-                                            
+
                                         />
                                         <br /> <br />
                                         <Typography component="h6" variant="h6" color="textPrimary">
                                             Category
                                         </Typography>
-                                        <Select
-                                            native
-                                            value=""
-                                            fullWidth
-                                            onChange={() => { }}
-                                            inputProps={{
-                                                name: 'age',
-                                            }}
-                                        >
-                                            <option value="">Select</option>
-                                            <option value={1}>Baby & Kids</option>
-                                            <option value={2}>Agriculture</option>
-                                            <option value={3}>Cars, Motos & Boats</option>
-                                            <option value={4}>Services</option>
-                                            <option value={5}>Leisure</option>
-                                            <option value={6}>Animals</option>
-                                            <option value={7}>Furniture, House & Garden</option>
-                                            <option value={8}>Tools</option>
-                                            <option value={9}>Phones & Tablets</option>
-                                            <option value={10}>Sports</option>
-                                            <option value={11}>Technology</option>
-                                            <option value={12}>Job</option>
-                                            <option value={13}>Others</option>
-
-                                        </Select>
+                                        <FormControl error={errors.category} fullWidth>
+                                            <Select
+                                                name="category"
+                                                value={values.category}
+                                                fullWidth
+                                                onChange={handleChange}
+                                            >
+                                                <MenuItem value="Baby & Kids">Baby & Kids</MenuItem>
+                                                <MenuItem value="Agriculture">Agriculture</MenuItem>
+                                                <MenuItem value="Cars, Motos & Boats">Cars, Motos & Boats</MenuItem>
+                                                <MenuItem value="Services">Services</MenuItem>
+                                                <MenuItem value="Leisure">Leisure</MenuItem>
+                                                <MenuItem value="Animals">Animals</MenuItem>
+                                                <MenuItem value="Furniture, House & Garden">Furniture, House & Garden</MenuItem>
+                                                <MenuItem value="Tools">Tools</MenuItem>
+                                                <MenuItem value="Phones & Tablets">Phones & Tablets</MenuItem>
+                                                <MenuItem value="Sports">Sports</MenuItem>
+                                                <MenuItem value="Technology">Technology</MenuItem>
+                                                <MenuItem value="Job">Job</MenuItem>
+                                                <MenuItem value="Others">Others</MenuItem>
+                                            </Select>
+                                            <FormHelperText>
+                                                {errors.category}
+                                            </FormHelperText>
+                                        </FormControl>
                                     </Box>
                                 </Container>
 
