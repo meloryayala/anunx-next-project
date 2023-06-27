@@ -1,11 +1,9 @@
 import { Formik } from 'formik'
-import { useDropzone } from 'react-dropzone'
 
 import {
     Box,
     Button,
     Container,
-    IconButton,
     InputAdornment,
     InputLabel,
     MenuItem,
@@ -15,11 +13,11 @@ import {
     FormHelperText,
     Input
 } from '@material-ui/core'
-import { DeleteForever } from '@material-ui/icons'
 
 import TemplateDefault from '../../../templates/Default'
 import { initialValues, validateSchema } from './formValues'
 import useStyles from './styles'
+import FileUpload from '../../../src/components/FileUpload'
 
 const Publish = () => {
     const classes = useStyles()
@@ -42,28 +40,6 @@ const Publish = () => {
                         handleSubmit,
                         setFieldValue,
                     }) => {
-                        const { getRootProps, getInputProps } = useDropzone({
-                            accept: 'image/*',
-                            onDrop: (acceptedFile) => {
-                                const newFiles = acceptedFile.map(file => {
-                                    return Object.assign(file, {
-                                        preview: URL.createObjectURL(file)
-                                    })
-                                })
-
-
-                                //setFieldValue('nome', 'value')
-                                setFieldValue('files', [
-                                    ...values.files,
-                                    ...newFiles,
-                                ])
-                            }
-                        })
-
-                        const handleRemoveFile = fileName => {
-                            const newFileState = values.files.filter(file => file.name !== fileName)
-                            setFieldValue('files', newFileState)
-                        }
 
                         return (
                             <form onSubmit={handleSubmit}>
@@ -125,50 +101,12 @@ const Publish = () => {
 
                                 <Container maxWidth="md" className={classes.boxContainer}>
                                     <Box className={classes.box}>
-                                        <Typography component="h6" variant="h6" color={errors.files ? "error" : "textPrimary"}>
-                                            Images
-                                        </Typography>
-                                        <Typography component="div" variant="body2" color={errors.files ? "error" : "textPrimary"}>
-                                            The first image will be the first advertisement image.
-                                        </Typography>
-                                        {
-                                            errors.files
-                                                ? <Typography variant="body2" color="error" gutterBottom>{errors.files}</Typography>
-                                                : null
-                                        }
-                                        <Box className={classes.thumbsContainer}>
-                                            <Box className={classes.dropzone} {...getRootProps()}>
-                                                <input name="files" {...getInputProps()} />
-                                                <Typography variant="body2" color={errors.files ? "error" : "textPrimary"}>
-                                                    Click to add or drag an image here.
-                                                </Typography>
-                                            </Box>
-                                            {
-                                                values.files.map((file, index) => (
-                                                    <Box
-                                                        key={file.name}
-                                                        className={classes.thumb}
-                                                        style={{ backgroundImage: `url(${file.preview})` }}
-                                                    >
-                                                        {
-                                                            index === 0 ?
-                                                                <Box className={classes.adsCover}>
-                                                                    <Typography variant="body" color="primary">
-                                                                        Ads cover
-                                                                    </Typography>
-                                                                </Box>
-                                                                : null
-                                                        }
-                                                        <Box className={classes.mask}>
-                                                            <IconButton color="secondary" onClick={() => handleRemoveFile(file.name)}>
-                                                                <DeleteForever fontSize="large" />
-                                                            </IconButton>
-                                                        </Box>
-                                                    </Box>
-                                                ))
-                                            }
-
-                                        </Box>
+                                        <FileUpload 
+                                        files={values.files} 
+                                        errors={errors.files} 
+                                        touched={touched.files}
+                                        setFieldValue={setFieldValue} 
+                                        />
                                     </Box>
                                 </Container>
 
