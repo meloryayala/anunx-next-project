@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core'
 import Carousel from 'react-material-ui-carousel'
 
-import TemplateDefault from '../templates/Default'
+import TemplateDefault from '../../templates/Default'
 
 const useStyles = makeStyles((theme) => ({
     box: {
