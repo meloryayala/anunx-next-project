@@ -1,7 +1,5 @@
 import { object, string, number, array } from 'yup'
 
-
-
 const initialValues = {
     title: '',
     category: '',
@@ -22,7 +20,7 @@ const validateSchema = object({
     category: string().required('Required field'),
 
     description: string()
-        .min(50, 'Write a description minimun of 50 caracteries')
+        .min(50, 'Write a description minimun of 50 characters')
         .required('Required field'),
 
     price: number().required('Required field'),

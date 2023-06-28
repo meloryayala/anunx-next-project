@@ -79,9 +79,7 @@ const FileUpload = ({ files, errors, touched, setFieldValue }) => {
                         </Box>
                     ))
                 }
-
             </Box>
-
         </>
     )
 }
