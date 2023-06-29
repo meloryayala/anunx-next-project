@@ -1,4 +1,6 @@
 import { Formik } from 'formik'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 import {
     Container,
@@ -9,14 +11,32 @@ import {
     Input,
     FormHelperText,
     Button,
+    CircularProgress,
 } from '@material-ui/core'
-
-import TemplateDefault from '../../../templates/Default'
 import useStyles from './styles'
+
+import useToasty from '../../../src/contexts/Toasty'
+import TemplateDefault from '../../../templates/Default'
 import { initialValues, validationSchema } from './formValues'
 
 const Signup = () => {
     const classes = useStyles()
+    const router = useRouter()
+    const { setToasty } = useToasty()
+
+    const handleFormSubmit = async values => {
+        const response = await axios.post('/api/users', values)
+
+        if (response.data.success) {
+            setToasty({
+                open: true,
+                severity: 'success',
+                text: 'Registration completed!',
+            })
+
+            router.push('/auth/signin')
+        }
+    }
 
     return (
         <TemplateDefault>
@@ -34,9 +54,7 @@ const Signup = () => {
                         <Formik
                             initialValues={initialValues}
                             validationSchema={validationSchema}
-                            onSubmit={(values) => {
-                                console.log('form enviado', values)
-                            }}
+                            onSubmit={handleFormSubmit}
                         >
                             {
                                 ({
@@ -100,16 +118,23 @@ const Signup = () => {
                                                     {errors.passwordConf && touched.passwordConf ? errors.passwordConf : null}
                                                 </FormHelperText>
                                             </FormControl>
+                                            {
+                                                isSubmitting
+                                                    ? (
+                                                        <CircularProgress className={classes.loading} />
+                                                    ) : (
+                                                        <Button
+                                                            type="submit"
+                                                            fullWidth
+                                                            variant="contained"
+                                                            color="primary"
+                                                            className={classes.submit}
+                                                        >
+                                                            Signup
+                                                        </Button>
+                                                    )
+                                            }
 
-                                            <Button
-                                                type="submit"
-                                                fullWidth
-                                                variant="contained"
-                                                color="primary"
-                                                className={classes.submit}
-                                            >
-                                                Signup
-                                            </Button>
                                         </form>
                                     )
                                 }

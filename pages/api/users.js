@@ -1,6 +1,6 @@
-import dbConnect from "../../src/utils/dbConnect"
 import { crypt } from "../../src/utils/password"
-import UsersModel from '../../src/models/users'
+import UsersModel from "../../src/models/users"
+import dbConnect from "../../src/utils/dbConnect"
 
 const users = async (req, res) => {
     const { method } = req
@@ -12,11 +12,7 @@ const users = async (req, res) => {
             break
 
         case 'POST':
-            //get data from req
-            //connect with database
-            //encrypt password
-            //save data
-            //respond succcess
+
             const {
                 name,
                 email,
