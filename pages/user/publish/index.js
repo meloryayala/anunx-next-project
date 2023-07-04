@@ -1,4 +1,6 @@
 import { Formik } from 'formik'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 import {
     Box,
@@ -14,22 +16,59 @@ import {
     Input
 } from '@material-ui/core'
 
+import useStyles from './styles'
 import TemplateDefault from '../../../templates/Default'
 import { initialValues, validateSchema } from './formValues'
-import useStyles from './styles'
 import FileUpload from '../../../src/components/FileUpload'
+import useToasty from '../../../src/contexts/Toasty'
 
 const Publish = () => {
     const classes = useStyles()
+    const { setToasty } = useToasty()
+    const router = useRouter()
+
+    const handleSuccess = () => {
+        setToasty({
+            open: true,
+            text: 'Advertisement registered successfully',
+            severity: 'success',
+        })
+
+        //router.push('/user/dashboard')
+    }
+
+    const handleError = () => {
+        setToasty({
+            open: true,
+            text: 'Ooops, an error has ocurred, try again.',
+            severity: 'error',
+        })
+    }
+
+    const handleFormSubmit = (values) => {
+        const formData = new FormData()
+
+        for (let field in values) {
+            if (field === 'files') {
+                values.files.forEach(file => {
+                    formData.append('files', file)
+                })
+            } else {
+                formData.append(field, values[field])
+            }
+        }
+
+        axios.post('/api/products', formData)
+            .then(handleSuccess)
+            .catch(handleError)
+    }
 
     return (
         <TemplateDefault>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validateSchema}
-                onSubmit={(values) => {
-                    console.log('form enviado', values)
-                }}
+                onSubmit={handleFormSubmit}
             >
                 {
                     ({
