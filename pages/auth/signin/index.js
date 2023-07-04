@@ -26,19 +26,20 @@ const Signin = ({ APP_URL }) => {
   const router = useRouter()
   const { setToasty } = useToasty()
   const [session] = useSession()
+
   console.log(APP_URL)
 
   const handleFormSubmit = async values => {
     signIn('credentials', {
       email: values.email,
       password: values.password,
-      callbackUrl: `${APP_URL}/user/dashboard`
+      callbackUrl: `${APP_URL}/user/dashboard`,
     })
   }
 
   const handleGoogleLogin = () => {
     signIn('google', {
-      callbackUrl: `${APP_URL}/user/dashboard`
+      callbackUrl: `${APP_URL}/user/dashboard`,
     })
   }
 
@@ -159,5 +160,7 @@ Signin.getInitialProps = async function () {
     APP_URL: process.env.APP_URL
   }
 }
+
+
 
 export default Signin

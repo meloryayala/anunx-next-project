@@ -101,11 +101,11 @@ const Publish = () => {
 
                                 <Container maxWidth="md" className={classes.boxContainer}>
                                     <Box className={classes.box}>
-                                        <FileUpload 
-                                        files={values.files} 
-                                        errors={errors.files} 
-                                        touched={touched.files}
-                                        setFieldValue={setFieldValue} 
+                                        <FileUpload
+                                            files={values.files}
+                                            errors={errors.files}
+                                            touched={touched.files}
+                                            setFieldValue={setFieldValue}
                                         />
                                     </Box>
                                 </Container>
@@ -208,5 +208,7 @@ const Publish = () => {
         </TemplateDefault>
     )
 }
+
+Publish.requireAuth = true
 
 export default Publish
