@@ -130,7 +130,7 @@ const Signup = () => {
                                                             color="primary"
                                                             className={classes.submit}
                                                         >
-                                                            Signup
+                                                            Sign up
                                                         </Button>
                                                     )
                                             }

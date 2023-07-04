@@ -1,6 +1,6 @@
 import { Formik } from 'formik'
-import axios from 'axios'
 import { useRouter } from 'next/router'
+import { signIn, useSession } from 'next-auth/client'
 
 import {
   Container,
@@ -18,14 +18,20 @@ import useStyles from './styles'
 import useToasty from '../../../src/contexts/Toasty'
 import TemplateDefault from '../../../templates/Default'
 import { initialValues, validationSchema } from './formValues'
+import { Alert } from '@material-ui/lab'
 
 const Signin = () => {
   const classes = useStyles()
   const router = useRouter()
   const { setToasty } = useToasty()
+  const [session] = useSession()
 
   const handleFormSubmit = async values => {
-
+    signIn('credentials', {
+      email: values.email,
+      password: values.password,
+      callbackUrl: 'http://localhost:3000/user/dashboard'
+    })
   }
 
   return (
@@ -55,6 +61,15 @@ const Signin = () => {
                 }) => {
                   return (
                     <form onSubmit={handleSubmit}>
+                      {
+                        router.query.i === '1'
+                          ? (
+                            <Alert severity="error" className={classes.errorMessage}>
+                              User or password invalid
+                            </Alert>
+                          )
+                          : null
+                      }
                       <FormControl fullWidth error={errors.email && touched.email} className={classes.formControl}>
                         <InputLabel>E-mail</InputLabel>
                         <Input
@@ -85,7 +100,8 @@ const Signin = () => {
                         isSubmitting
                           ? (
                             <CircularProgress className={classes.loading} />
-                          ) : (
+                          )
+                          : (
                             <Button
                               type="submit"
                               fullWidth
@@ -93,7 +109,7 @@ const Signin = () => {
                               color="primary"
                               className={classes.submit}
                             >
-                              Signup
+                              Sign in
                             </Button>
                           )
                       }
