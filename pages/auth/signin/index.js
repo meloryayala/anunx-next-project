@@ -1,6 +1,7 @@
 import { Formik } from 'formik'
 import { useRouter } from 'next/router'
 import { signIn, useSession } from 'next-auth/client'
+import Image from 'next/image'
 
 import {
   Container,
@@ -34,6 +35,12 @@ const Signin = () => {
     })
   }
 
+  const handleGoogleLogin = () => {
+    signIn('google',{
+      callbackUrl: 'http://localhost:3000/user/dashboard'
+    })
+  }
+
   return (
     <TemplateDefault>
       <Container maxWidth="sm" component="main" className={classes.container}>
@@ -45,6 +52,26 @@ const Signin = () => {
 
         <Container maxWidth="md">
           <Box className={classes.box}>
+
+            <Box className={classes.googleBtn}>
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={
+                  <Image
+                    src="/images/logo_google.svg"
+                    width={20}
+                    height={20}
+                    alt="Google login"
+                  />
+                }
+                onClick={handleGoogleLogin}>Enter with Google</Button>
+            </Box>
+
+            <Box className={classes.orDivider}>
+              <span>ou</span>
+            </Box>
+
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
