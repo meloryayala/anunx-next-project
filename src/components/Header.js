@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { signOut, useSession } from 'next-auth/client'
 import Link from 'next/link'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   userName: {
-    marginLeft: 6,
+    marginLeft: 8,
   },
   divider: {
     margin: '8px 0'
@@ -38,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ButtonAppBar() {
   const classes = useStyles();
   const [anchorUserMenu, setAnchorUserMenu] = useState(false)
+  const [session] = useSession()
 
   const openUserMenu = Boolean(anchorUserMenu)
 
@@ -49,19 +51,24 @@ export default function ButtonAppBar() {
             <Typography variant="h6" className={classes.title}>
               Anunx
             </Typography>
-            <Link href="/user/publish">
+            <Link href={session ? '/user/publish' : '/auth/signin'}>
               <Button variant="outlined" color="inherit">Advertise & sell</Button>
             </Link>
-            <IconButton color="secondary" onClick={(e) => setAnchorUserMenu(e.currentTarget)}>
-              {
-                true === false
-                  ? <Avatar src="" />
-                  : <AccountCircle />
-              }
-              <Typography variant="subtitle2" color="secondary" className={classes.userName}>
-                Melory Ayala
-              </Typography>
-            </IconButton>
+            {
+              session
+                ? (
+                  <IconButton color="secondary" onClick={(e) => setAnchorUserMenu(e.currentTarget)}>
+                    {
+                      session.user.image
+                        ? <Avatar src={session.user.image} />
+                        : <AccountCircle />
+                    }
+                    <Typography variant="subtitle2" color="secondary" className={classes.userName}>
+                      {session.user.name}
+                    </Typography>
+                  </IconButton>
+                ) : null
+            }
             <Menu
               open={openUserMenu}
               anchorEl={anchorUserMenu}
@@ -78,7 +85,9 @@ export default function ButtonAppBar() {
                 <MenuItem>Publish advertisement</MenuItem>
               </Link>
               <Divider className={classes.divider} />
-              <MenuItem>Log out</MenuItem>
+              <MenuItem onClick={() => signOut({
+                callbackUrl: '/'
+              })}>Log out</MenuItem>
             </Menu>
           </Toolbar>
         </Container>
