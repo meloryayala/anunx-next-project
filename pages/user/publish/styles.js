@@ -11,7 +11,14 @@ const useStyles = makeStyles((theme) => ({
     inputLabel: {
         fontWeight: 400,
         color: theme.palette.primary.main,
-    }
+    },
+    submit: {
+        margin: theme.spacing(3, 0, 2)
+    },
+    loading: {
+        display: 'block',
+        margin: '10px auto',
+    },
 }))
 
 export default useStyles

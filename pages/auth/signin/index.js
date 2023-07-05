@@ -155,9 +155,12 @@ const Signin = ({ APP_URL }) => {
   )
 }
 
-Signin.getInitialProps = async function () {
+export async function getServerSideProps() {
   return {
-    APP_URL: process.env.APP_URL
+    props: {
+      APP_URL: process.env.APP_URL
+
+    }
   }
 }
 
