@@ -3,11 +3,15 @@ import {
   Container,
   Grid,
   Typography,
+  Link,
 } from '@material-ui/core'
 
 import { makeStyles } from '@material-ui/core/styles'
 import TemplateDefault from '../../templates/Default'
 import Card from '../../src/components/Card'
+import ProductsModel from '../../src/models/products'
+import { getSession } from 'next-auth/client'
+import dbConnect from '../../src/utils/dbConnect'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -18,8 +22,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 
-const Dashboard = () => {
+const Dashboard = ({ products }) => {
   const classes = useStyles()
+
+  console.log(products)
 
   return (
     <TemplateDefault>
@@ -27,65 +33,40 @@ const Dashboard = () => {
         <Typography component="h1" variant="h2" align="center">
           My advertisements
         </Typography>
-        <Button variant="contained" color="primary" className={classes.buttonAdd}>
-          Add new advertisement
-        </Button>
+
+        <Link href="/user/publish">
+          <Button variant="contained" color="primary" className={classes.buttonAdd}>
+            Add new advertisement
+          </Button>
+        </Link>
+
       </Container>
       <Container maxWidth="md">
         <Grid container spacing={4}>
-          <Grid item xs={12} sm={6} md={4}>
-            <Card
-              image={'https://source.unsplash.com/random'}
-              title="Product XYZ"
-              subtitle="$ 50"
-              actions={
-                <>
-                  <Button size="small" color="primary">
-                    Edit
-                  </Button>
-                  <Button size="small" color="primary">
-                    Remove
-                  </Button>
-                </>
-              }
-            />
-          </Grid>
+          {
+            products.map(product => (
 
-          <Grid item xs={12} sm={6} md={4}>
-            <Card
-              image={'https://source.unsplash.com/random'}
-              title="Product XYZ"
-              subtitle="$ 50"
-              actions={
-                <>
-                  <Button size="small" color="primary">
-                    Edit
-                  </Button>
-                  <Button size="small" color="primary">
-                    Remove
-                  </Button>
-                </>
-              }
-            />
-          </Grid>
+              <Grid key={product._id} item xs={12} sm={6} md={4}>
+                <Card
+                  image={`/uploads/${product.files[0].name}`}
+                  title={product.title}
+                  subtitle={product.price}
+                  actions={
+                    <>
+                      <Button size="small" color="primary">
+                        Edit
+                      </Button>
+                      <Button size="small" color="primary">
+                        Remove
+                      </Button>
+                    </>
+                  }
+                />
+              </Grid>
 
-          <Grid item xs={12} sm={6} md={4}>
-            <Card
-              image={'https://source.unsplash.com/random'}
-              title="Product XYZ"
-              subtitle="$ 50"
-              actions={
-                <>
-                  <Button size="small" color="primary">
-                    Edit
-                  </Button>
-                  <Button size="small" color="primary">
-                    Remove
-                  </Button>
-                </>
-              }
-            />
-          </Grid>
+            ))
+          }
+
         </Grid>
       </Container>
     </TemplateDefault >
@@ -93,5 +74,19 @@ const Dashboard = () => {
 }
 
 Dashboard.requireAuth = true
+
+
+export async function getServerSideProps({ req }) {
+  const session = await getSession({ req })
+  await dbConnect()
+
+  const products = await ProductsModel.find({ 'user.id': session.userId })
+
+  return {
+    props: {
+      products: JSON.parse(JSON.stringify(products)),
+    }
+  }
+}
 
 export default Dashboard
