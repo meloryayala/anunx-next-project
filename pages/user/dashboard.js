@@ -12,6 +12,7 @@ import Card from '../../src/components/Card'
 import ProductsModel from '../../src/models/products'
 import { getSession } from 'next-auth/client'
 import dbConnect from '../../src/utils/dbConnect'
+import { formatCurrency } from '../../src/utils/currency'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,8 +25,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Dashboard = ({ products }) => {
   const classes = useStyles()
-
-  console.log(products)
 
   return (
     <TemplateDefault>
@@ -50,7 +49,7 @@ const Dashboard = ({ products }) => {
                 <Card
                   image={`/uploads/${product.files[0].name}`}
                   title={product.title}
-                  subtitle={product.price}
+                  subtitle={formatCurrency(product.price)}
                   actions={
                     <>
                       <Button size="small" color="primary">
