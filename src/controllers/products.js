@@ -32,8 +32,8 @@ const post = async (req, res) => {
 
             const fileName = `${timeStamp}_${random}${extension}`
 
-            const oldPath = path.join(__dirname, `../../../../${file.path}`)
-            const newPath = path.join(__dirname, `../../../../${form.uploadDir}/${fileName}`)
+            const oldPath = path.join(__dirname, `../../../../../${file.path}`)
+            const newPath = path.join(__dirname, `../../../../../${form.uploadDir}/${fileName}`)
 
             filesToSave.push({
                 name: fileName,
@@ -87,6 +87,21 @@ const post = async (req, res) => {
     })
 }
 
+const remove = async (req, res) => {
+    await dbConnect()
+
+    const id = req.body.id
+
+    const deleted = await ProductsModel.findOneAndRemove({ _id: id })
+
+    if (deleted) {
+        return res.status(200).json({ success: true })
+    } else {
+        return res.status(500).json({ success: false })
+    }
+}
+
 export {
     post,
+    remove,
 }
