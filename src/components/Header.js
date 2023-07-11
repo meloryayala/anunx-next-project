@@ -18,7 +18,6 @@ import {
 
 import {
   AccountCircle,
-  MenuIcon,
 } from '@material-ui/icons'
 
 const useStyles = makeStyles((theme) => ({

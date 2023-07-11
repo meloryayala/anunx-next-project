@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import slugify from 'slugify'
 
@@ -30,11 +32,17 @@ const useStyles = makeStyles((theme) => ({
     },
     productLink: {
         textDecoration: 'none'
-    }
+    },
 }))
 
 const Home = ({ products }) => {
     const classes = useStyles()
+    const router = useRouter()
+    const [inputSearch, setInputSearch] = useState()
+
+    const handleSubmitSearch = inputSearch => {
+        router.push(`/search/${inputSearch}`)
+    }
 
     return (
         <TemplateDefault>
@@ -46,8 +54,9 @@ const Home = ({ products }) => {
                     <InputBase
                         placeholder="E. g. Dinner table"
                         fullWidth
+                        onChange={(e) => setInputSearch(e.target.value)}
                     />
-                    <IconButton>
+                    <IconButton onClick={() => handleSubmitSearch(inputSearch)}>
                         <SearchIcon />
                     </IconButton>
                 </Paper>

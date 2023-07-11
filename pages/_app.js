@@ -7,7 +7,7 @@ import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import theme from '../src/theme'
 import { ToastyProvider } from '../src/contexts/Toasty'
-import CheckAuth from '../src/components/checkAuth'
+import CheckAuth from '../src/components/CheckAuth'
 
 export default function MyApp(props) {
   const { Component, pageProps } = props
@@ -24,8 +24,8 @@ export default function MyApp(props) {
             <CssBaseline />
             {
               Component.requireAuth
-              ? <CheckAuth Component={Component} pageProps={pageProps}/>
-              : <Component {...pageProps} />
+                ? <CheckAuth Component={Component} pageProps={pageProps} />
+                : <Component {...pageProps} />
             }
           </ToastyProvider>
         </ThemeProvider>
