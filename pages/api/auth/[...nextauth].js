@@ -5,7 +5,7 @@ import Providers from 'next-auth/providers'
 
 
 export default NextAuth({
-  secret: process.env.SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     Providers.Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
