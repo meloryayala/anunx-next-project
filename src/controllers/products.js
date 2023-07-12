@@ -7,11 +7,11 @@ import ProductsModel from '../../src/models/products'
 const post = async (req, res) => {
     await dbConnect()
 
-    const form = new formidable.IncomingForm({
-        multiples: true,
-        uploadDir: 'public/uploads',
-        keepExtensions: true,
-    })
+    // const form = new formidable.IncomingForm({
+    //     multiples: true,
+    //     uploadDir: 'public/uploads',
+    //     keepExtensions: true,
+    // })
 
     form.parse(req, async (error, fields, data) => {
         if (error) {
