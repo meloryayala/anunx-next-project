@@ -33,7 +33,6 @@ const validateSchema = object({
 
     phone: number().required('Required field'),
 
-    files: array().min(1, 'Upload at least one image')//.required('Required field'),
 
 })
 
