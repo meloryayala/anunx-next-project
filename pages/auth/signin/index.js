@@ -21,25 +21,25 @@ import TemplateDefault from '../../../templates/Default'
 import { initialValues, validationSchema } from '../../../src/formValues/signinFormValues'
 import { Alert } from '@material-ui/lab'
 
-const Signin = ({ APP_URL }) => {
+const Signin = ({ NEXTAUTH_URL }) => {
   const classes = useStyles()
   const router = useRouter()
   const { setToasty } = useToasty()
   const [session] = useSession()
 
-  console.log(APP_URL)
+  console.log(NEXTAUTH_URL)
 
   const handleFormSubmit = async values => {
     signIn('credentials', {
       email: values.email,
       password: values.password,
-      callbackUrl: `${APP_URL}/user/dashboard`,
+      callbackUrl: `${NEXTAUTH_URL}/user/dashboard`,
     })
   }
 
   const handleGoogleLogin = () => {
     signIn('google', {
-      callbackUrl: `${APP_URL}/user/dashboard`,
+      callbackUrl: `${NEXTAUTH_URL}/user/dashboard`,
     })
   }
 
@@ -158,7 +158,7 @@ const Signin = ({ APP_URL }) => {
 export async function getServerSideProps() {
   return {
     props: {
-      APP_URL: process.env.APP_URL
+      NEXTAUTH_URL: process.env.NEXTAUTH_URL
 
     }
   }
