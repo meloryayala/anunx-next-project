@@ -25,28 +25,28 @@ const post = async (req, res) => {
 
         const filesToSave = []
 
-        filesToRename.forEach(file => {
-            const timeStamp = Date.now()
-            const random = Math.floor(Math.random() * 9999999) + 1
-            const extension = path.extname(file.name)
+        // filesToRename.forEach(file => {
+        //     const timeStamp = Date.now()
+        //     const random = Math.floor(Math.random() * 9999999) + 1
+        //     const extension = path.extname(file.name)
 
-            const fileName = `${timeStamp}_${random}${extension}`
+        //     const fileName = `${timeStamp}_${random}${extension}`
 
-            const oldPath = path.join(__dirname, `../../../../../${file.path}`)
-            const newPath = path.join(__dirname, `../../../../../${form.uploadDir}/${fileName}`)
+        //     // const oldPath = path.join(__dirname, `../../../../../${file.path}`)
+        //     // const newPath = path.join(__dirname, `../../../../../${form.uploadDir}/${fileName}`)
 
-            filesToSave.push({
-                name: fileName,
-                path: newPath,
-            })
+        //     // filesToSave.push({
+        //     //     name: fileName,
+        //     //     path: newPath,
+        //     // })
 
-            fs.rename(oldPath, newPath, (error) => {
-                if (error) {
-                    console.log(error)
-                    return res.status(500).json({ success: false })
-                }
-            })
-        })
+        //     // fs.rename(oldPath, newPath, (error) => {
+        //     //     if (error) {
+        //     //         console.log(error)
+        //     //         return res.status(500).json({ success: false })
+        //     //     }
+        //     // })
+        // })
 
         const {
             title,
@@ -72,7 +72,7 @@ const post = async (req, res) => {
                 phone,
                 image,
             },
-            files: filesToSave,
+            // files: filesToSave,
         })
 
         const register = await product.save()
