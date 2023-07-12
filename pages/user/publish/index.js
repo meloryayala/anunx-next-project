@@ -17,7 +17,7 @@ import {
     CircularProgress,
 } from '@material-ui/core'
 
-import useStyles from './styles'
+import useStyles from '../../../styles/publishStyles'
 import TemplateDefault from '../../../templates/Default'
 import { initialValues, validateSchema } from '../../../src/formValues/publishFormValues'
 import FileUpload from '../../../src/components/FileUpload'

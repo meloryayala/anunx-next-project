@@ -14,7 +14,7 @@ import {
   Button,
   CircularProgress,
 } from '@material-ui/core'
-import useStyles from './styles'
+import useStyles from '../../../styles/signinStyles'
 
 import useToasty from '../../../src/contexts/Toasty'
 import TemplateDefault from '../../../templates/Default'
