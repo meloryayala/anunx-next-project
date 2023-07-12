@@ -19,7 +19,7 @@ import {
 
 import useStyles from './styles'
 import TemplateDefault from '../../../templates/Default'
-import { initialValues, validateSchema } from './formValues'
+import { initialValues, validateSchema } from '../../../src/formValues/publishFormValues'
 import FileUpload from '../../../src/components/FileUpload'
 import useToasty from '../../../src/contexts/Toasty'
 import { getSession } from 'next-auth/client'

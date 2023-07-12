@@ -18,7 +18,7 @@ import useStyles from './styles'
 
 import useToasty from '../../../src/contexts/Toasty'
 import TemplateDefault from '../../../templates/Default'
-import { initialValues, validationSchema } from './formValues'
+import { initialValues, validationSchema } from '../../../src/formValues/signinFormValues'
 import { Alert } from '@material-ui/lab'
 
 const Signin = ({ APP_URL }) => {
