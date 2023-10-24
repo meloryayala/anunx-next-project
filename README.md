@@ -19,9 +19,9 @@ Homepage                   |  Product Ads details
 * Advertisements
       
 **-Features:**
-* Create user account
-* User login/ logout
-* CRUD advertisements
+* Create user account 🦱
+* User login/ logout 🔓
+* CRUD advertisements ✒️📄
 
 <br>
 
